@@ -14,6 +14,18 @@ import CaseProductivityReport from '@/components/reports/productivity/CaseProduc
 import BillingEfficiencyReport from '@/components/reports/productivity/BillingEfficiencyReport';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 
+// New reports
+import ARAgingSummaryReport from '@/components/reports/client/ARAgingSummaryReport';
+import PaymentHistoryReport from '@/components/reports/client/PaymentHistoryReport';
+import CommissionReport from '@/components/reports/compensation/CommissionReport';
+import ExpensesReport from '@/components/reports/compensation/ExpensesReport';
+import BalanceSheetReport from '@/components/reports/accounting/BalanceSheetReport';
+import ExpenseAnalysisReport from '@/components/reports/accounting/ExpenseAnalysisReport';
+import VendorPerformanceReport from '@/components/reports/vendor/VendorPerformanceReport';
+import VendorPaymentReport from '@/components/reports/vendor/VendorPaymentReport';
+import StaffUtilizationReport from '@/components/reports/productivity/StaffUtilizationReport';
+import RevenueTrendsReport from '@/components/reports/productivity/RevenueTrendsReport';
+
 const Reports = () => {
   const { reportType } = useParams<{ reportType: string }>();
   const location = useLocation();
@@ -27,6 +39,10 @@ const Reports = () => {
           return <ClientStatementReport />;
         case 'aging':
           return <ClientAgingReport />;
+        case 'ar-aging-summary':
+          return <ARAgingSummaryReport />;
+        case 'payment-history':
+          return <PaymentHistoryReport />;
         default:
           return <ClientStatementReport />;
       }
@@ -37,6 +53,10 @@ const Reports = () => {
           return <TimesheetReport />;
         case 'bonus':
           return <BonusReport />;
+        case 'commission':
+          return <CommissionReport />;
+        case 'expenses':
+          return <ExpensesReport />;
         default:
           return <TimesheetReport />;
       }
@@ -47,6 +67,10 @@ const Reports = () => {
           return <ProfitLossReport />;
         case 'cash-flow':
           return <CashFlowReport />;
+        case 'balance-sheet':
+          return <BalanceSheetReport />;
+        case 'expense-analysis':
+          return <ExpenseAnalysisReport />;
         default:
           return <ProfitLossReport />;
       }
@@ -57,6 +81,10 @@ const Reports = () => {
           return <VendorSummaryReport />;
         case 'contracts':
           return <VendorContractReport />;
+        case 'performance':
+          return <VendorPerformanceReport />;
+        case 'payments':
+          return <VendorPaymentReport />;
         default:
           return <VendorSummaryReport />;
       }
@@ -67,6 +95,10 @@ const Reports = () => {
           return <CaseProductivityReport />;
         case 'billing-efficiency':
           return <BillingEfficiencyReport />;
+        case 'staff-utilization':
+          return <StaffUtilizationReport />;
+        case 'revenue-trends':
+          return <RevenueTrendsReport />;
         default:
           return <CaseProductivityReport />;
       }
