@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import ReportLayout from '../ReportLayout';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Cell, LineChart, Line } from 'recharts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
@@ -208,8 +208,8 @@ const StaffUtilizationReport = () => {
                   <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
                   <XAxis type="number" domain={[0, 100]} />
                   <YAxis type="category" dataKey="name" width={100} />
-                  <Tooltip 
-                    formatter={(value) => [`${value}%`, 'Utilization Rate']}
+                  <RechartsTooltip 
+                    formatter={(value: any) => [`${value}%`, 'Utilization Rate']}
                     labelFormatter={() => ''}
                   />
                   <Bar dataKey="utilization" name="Utilization Rate">
@@ -244,7 +244,7 @@ const StaffUtilizationReport = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="period" />
                   <YAxis domain={[75, 95]} />
-                  <Tooltip formatter={(value) => `${value}%`} />
+                  <RechartsTooltip formatter={(value: any) => `${value}%`} />
                   <Line type="monotone" dataKey="utilization" stroke="#8884d8" activeDot={{ r: 8 }} name="Avg. Utilization" />
                 </LineChart>
               </ResponsiveContainer>
@@ -335,7 +335,7 @@ const StaffUtilizationReport = () => {
                   <span className="text-sm">Excellent (90%+)</span>
                   <span className="text-sm">{staffData.filter(s => s.utilization >= 90).length} staff</span>
                 </div>
-                <Progress value={(staffData.filter(s => s.utilization >= 90).length / staffData.length) * 100} className="h-2 bg-gray-200" indicatorClassName="bg-green-500" />
+                <Progress value={(staffData.filter(s => s.utilization >= 90).length / staffData.length) * 100} className="h-2 bg-gray-200" />
               </div>
               
               <div>
@@ -343,7 +343,7 @@ const StaffUtilizationReport = () => {
                   <span className="text-sm">Good (85-89%)</span>
                   <span className="text-sm">{staffData.filter(s => s.utilization >= 85 && s.utilization < 90).length} staff</span>
                 </div>
-                <Progress value={(staffData.filter(s => s.utilization >= 85 && s.utilization < 90).length / staffData.length) * 100} className="h-2 bg-gray-200" indicatorClassName="bg-blue-500" />
+                <Progress value={(staffData.filter(s => s.utilization >= 85 && s.utilization < 90).length / staffData.length) * 100} className="h-2 bg-gray-200" />
               </div>
               
               <div>
@@ -351,15 +351,15 @@ const StaffUtilizationReport = () => {
                   <span className="text-sm">Average (80-84%)</span>
                   <span className="text-sm">{staffData.filter(s => s.utilization >= 80 && s.utilization < 85).length} staff</span>
                 </div>
-                <Progress value={(staffData.filter(s => s.utilization >= 80 && s.utilization < 85).length / staffData.length) * 100} className="h-2 bg-gray-200" indicatorClassName="bg-yellow-500" />
+                <Progress value={(staffData.filter(s => s.utilization >= 80 && s.utilization < 85).length / staffData.length) * 100} className="h-2 bg-gray-200" />
               </div>
               
               <div>
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-sm">Below Target (< 80%)</span>
+                  <span className="text-sm">Below Target (&lt; 80%)</span>
                   <span className="text-sm">{staffData.filter(s => s.utilization < 80).length} staff</span>
                 </div>
-                <Progress value={(staffData.filter(s => s.utilization < 80).length / staffData.length) * 100} className="h-2 bg-gray-200" indicatorClassName="bg-red-500" />
+                <Progress value={(staffData.filter(s => s.utilization < 80).length / staffData.length) * 100} className="h-2 bg-gray-200" />
               </div>
               
               <div className="flex justify-end mt-4">
