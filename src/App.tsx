@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
+import Reports from "./pages/Reports";
 import NotFound from "./pages/NotFound";
 import { useState } from "react";
 
@@ -37,11 +38,11 @@ const App = () => {
             <Route path="/settings" element={<Dashboard />} />
             
             {/* Report routes */}
-            <Route path="/reports/client/:reportType" element={<Dashboard />} />
-            <Route path="/reports/compensation/:reportType" element={<Dashboard />} />
-            <Route path="/reports/accounting/:reportType" element={<Dashboard />} />
-            <Route path="/reports/vendor/:reportType" element={<Dashboard />} />
-            <Route path="/reports/productivity/:reportType" element={<Dashboard />} />
+            <Route path="/reports/client/:reportType" element={<Reports />} />
+            <Route path="/reports/compensation/:reportType" element={<Reports />} />
+            <Route path="/reports/accounting/:reportType" element={<Reports />} />
+            <Route path="/reports/vendor/:reportType" element={<Reports />} />
+            <Route path="/reports/productivity/:reportType" element={<Reports />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
