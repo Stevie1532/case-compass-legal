@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import DashboardLayout from '@/components/layout/DashboardLayout';
@@ -31,93 +32,93 @@ import MatterRateCardsReport from '@/components/reports/client/MatterRateCardsRe
 import TotalBillingsReport from '@/components/reports/client/TotalBillingsReport';
 
 const Reports = () => {
-  const { reportType } = useParams<{ reportType: string }>();
   const location = useLocation();
   const path = location.pathname;
 
-  // Determine which report to show based on the URL
+  console.log('Current path:', path); // Debug log
+
+  // Determine which report to show based on the exact URL path
   const renderReport = () => {
-    if (path.includes('/reports/client/')) {
-      switch(reportType) {
-        case 'statement':
-        case 'statement-of-account':
-          return <ClientStatementReport />;
-        case 'aging':
-          return <ClientAgingReport />;
-        case 'ar-aging-summary':
-          return <ARAgingSummaryReport />;
-        case 'payment-history':
-        case 'client-payments':
-          return <PaymentHistoryReport />;
-        case 'sales-tax':
-        case 'sales-tax-clients':
-          return <SalesTaxClientsReport />;
-        case 'matter-rate-cards':
-          return <MatterRateCardsReport />;
-        case 'total-billings':
-          return <TotalBillingsReport />;
-        default:
-          return <ClientStatementReport />;
-      }
-    } 
-    else if (path.includes('/reports/compensation/')) {
-      switch(reportType) {
-        case 'timesheet':
-          return <TimesheetReport />;
-        case 'bonus':
-          return <BonusReport />;
-        case 'commission':
-          return <CommissionReport />;
-        case 'expenses':
-          return <ExpensesReport />;
-        default:
-          return <TimesheetReport />;
-      }
+    // Client reports - use exact path matching
+    if (path === '/reports/client/statement' || path === '/reports/client/statement-of-account') {
+      return <ClientStatementReport />;
     }
-    else if (path.includes('/reports/accounting/')) {
-      switch(reportType) {
-        case 'profit-loss':
-          return <ProfitLossReport />;
-        case 'cash-flow':
-          return <CashFlowReport />;
-        case 'balance-sheet':
-          return <BalanceSheetReport />;
-        case 'expense-analysis':
-          return <ExpenseAnalysisReport />;
-        default:
-          return <ProfitLossReport />;
-      }
+    if (path === '/reports/client/aging') {
+      return <ClientAgingReport />;
     }
-    else if (path.includes('/reports/vendor/')) {
-      switch(reportType) {
-        case 'summary':
-          return <VendorSummaryReport />;
-        case 'contracts':
-          return <VendorContractReport />;
-        case 'performance':
-          return <VendorPerformanceReport />;
-        case 'payments':
-          return <VendorPaymentReport />;
-        default:
-          return <VendorSummaryReport />;
-      }
+    if (path === '/reports/client/ar-aging-summary') {
+      return <ARAgingSummaryReport />;
     }
-    else if (path.includes('/reports/productivity/')) {
-      switch(reportType) {
-        case 'case-productivity':
-          return <CaseProductivityReport />;
-        case 'billing-efficiency':
-          return <BillingEfficiencyReport />;
-        case 'staff-utilization':
-          return <StaffUtilizationReport />;
-        case 'revenue-trends':
-          return <RevenueTrendsReport />;
-        default:
-          return <CaseProductivityReport />;
-      }
+    if (path === '/reports/client/payment-history' || path === '/reports/client/client-payments') {
+      return <PaymentHistoryReport />;
+    }
+    if (path === '/reports/client/sales-tax' || path === '/reports/client/sales-tax-clients') {
+      return <SalesTaxClientsReport />;
+    }
+    if (path === '/reports/client/matter-rate-cards') {
+      return <MatterRateCardsReport />;
+    }
+    if (path === '/reports/client/total-billings') {
+      return <TotalBillingsReport />;
+    }
+
+    // Compensation reports
+    if (path === '/reports/compensation/timesheet') {
+      return <TimesheetReport />;
+    }
+    if (path === '/reports/compensation/bonus') {
+      return <BonusReport />;
+    }
+    if (path === '/reports/compensation/commission') {
+      return <CommissionReport />;
+    }
+    if (path === '/reports/compensation/expenses') {
+      return <ExpensesReport />;
+    }
+
+    // Accounting reports
+    if (path === '/reports/accounting/profit-loss') {
+      return <ProfitLossReport />;
+    }
+    if (path === '/reports/accounting/cash-flow') {
+      return <CashFlowReport />;
+    }
+    if (path === '/reports/accounting/balance-sheet') {
+      return <BalanceSheetReport />;
+    }
+    if (path === '/reports/accounting/expense-analysis') {
+      return <ExpenseAnalysisReport />;
+    }
+
+    // Vendor reports
+    if (path === '/reports/vendor/summary') {
+      return <VendorSummaryReport />;
+    }
+    if (path === '/reports/vendor/contracts') {
+      return <VendorContractReport />;
+    }
+    if (path === '/reports/vendor/performance') {
+      return <VendorPerformanceReport />;
+    }
+    if (path === '/reports/vendor/payments') {
+      return <VendorPaymentReport />;
+    }
+
+    // Productivity reports
+    if (path === '/reports/productivity/case-productivity') {
+      return <CaseProductivityReport />;
+    }
+    if (path === '/reports/productivity/billing-efficiency') {
+      return <BillingEfficiencyReport />;
+    }
+    if (path === '/reports/productivity/staff-utilization') {
+      return <StaffUtilizationReport />;
+    }
+    if (path === '/reports/productivity/revenue-trends') {
+      return <RevenueTrendsReport />;
     }
     
-    // Default to client statement report if no match
+    // Default fallback
     return <ClientStatementReport />;
   };
 
