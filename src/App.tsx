@@ -54,24 +54,28 @@ const App = () => {
             <Route path="/reports/compensation/bonus" element={<Reports />} />
             <Route path="/reports/compensation/commission" element={<Reports />} />
             <Route path="/reports/compensation/expenses" element={<Reports />} />
+            <Route path="/reports/compensation/referral-reports" element={<Reports />} />
             
             {/* Accounting Report routes */}
             <Route path="/reports/accounting/profit-loss" element={<Reports />} />
             <Route path="/reports/accounting/cash-flow" element={<Reports />} />
             <Route path="/reports/accounting/balance-sheet" element={<Reports />} />
             <Route path="/reports/accounting/expense-analysis" element={<Reports />} />
+            <Route path="/reports/accounting/general-ledger" element={<Reports />} />
             
             {/* Vendor Report routes */}
             <Route path="/reports/vendor/summary" element={<Reports />} />
             <Route path="/reports/vendor/contracts" element={<Reports />} />
             <Route path="/reports/vendor/performance" element={<Reports />} />
             <Route path="/reports/vendor/payments" element={<Reports />} />
+            <Route path="/reports/vendor/spend-analysis" element={<Reports />} />
             
             {/* Productivity Report routes */}
             <Route path="/reports/productivity/case-productivity" element={<Reports />} />
             <Route path="/reports/productivity/billing-efficiency" element={<Reports />} />
             <Route path="/reports/productivity/staff-utilization" element={<Reports />} />
             <Route path="/reports/productivity/revenue-trends" element={<Reports />} />
+            <Route path="/reports/productivity/attorney-productivity" element={<Reports />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

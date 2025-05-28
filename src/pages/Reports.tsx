@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import ClientStatementReport from '@/components/reports/client/ClientStatementReport';
 import ClientAgingReport from '@/components/reports/client/ClientAgingReport';
@@ -30,6 +30,12 @@ import RevenueTrendsReport from '@/components/reports/productivity/RevenueTrends
 import SalesTaxClientsReport from '@/components/reports/client/SalesTaxClientsReport';
 import MatterRateCardsReport from '@/components/reports/client/MatterRateCardsReport';
 import TotalBillingsReport from '@/components/reports/client/TotalBillingsReport';
+
+// New reports
+import ReferralReport from '@/components/reports/compensation/ReferralReport';
+import VendorSpendReport from '@/components/reports/vendor/VendorSpendReport';
+import GeneralLedgerReport from '@/components/reports/accounting/GeneralLedgerReport';
+import AttorneyProductivityReport from '@/components/reports/productivity/AttorneyProductivityReport';
 
 const Reports = () => {
   const location = useLocation();
@@ -75,6 +81,9 @@ const Reports = () => {
     if (path === '/reports/compensation/expenses') {
       return <ExpensesReport />;
     }
+    if (path === '/reports/compensation/referral-reports') {
+      return <ReferralReport />;
+    }
 
     // Accounting reports
     if (path === '/reports/accounting/profit-loss') {
@@ -88,6 +97,9 @@ const Reports = () => {
     }
     if (path === '/reports/accounting/expense-analysis') {
       return <ExpenseAnalysisReport />;
+    }
+    if (path === '/reports/accounting/general-ledger') {
+      return <GeneralLedgerReport />;
     }
 
     // Vendor reports
@@ -103,6 +115,9 @@ const Reports = () => {
     if (path === '/reports/vendor/payments') {
       return <VendorPaymentReport />;
     }
+    if (path === '/reports/vendor/spend-analysis') {
+      return <VendorSpendReport />;
+    }
 
     // Productivity reports
     if (path === '/reports/productivity/case-productivity') {
@@ -116,6 +131,9 @@ const Reports = () => {
     }
     if (path === '/reports/productivity/revenue-trends') {
       return <RevenueTrendsReport />;
+    }
+    if (path === '/reports/productivity/attorney-productivity') {
+      return <AttorneyProductivityReport />;
     }
     
     // Default fallback
