@@ -39,9 +39,12 @@ const App = () => {
             
             {/* Client Report routes */}
             <Route path="/reports/client/statement" element={<Reports />} />
+            <Route path="/reports/client/statement-of-account" element={<Reports />} />
             <Route path="/reports/client/aging" element={<Reports />} />
             <Route path="/reports/client/ar-aging-summary" element={<Reports />} />
             <Route path="/reports/client/payment-history" element={<Reports />} />
+            <Route path="/reports/client/client-payments" element={<Reports />} />
+            <Route path="/reports/client/sales-tax" element={<Reports />} />
             <Route path="/reports/client/sales-tax-clients" element={<Reports />} />
             <Route path="/reports/client/matter-rate-cards" element={<Reports />} />
             <Route path="/reports/client/total-billings" element={<Reports />} />

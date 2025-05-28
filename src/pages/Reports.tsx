@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import DashboardLayout from '@/components/layout/DashboardLayout';
@@ -14,7 +13,7 @@ import CaseProductivityReport from '@/components/reports/productivity/CaseProduc
 import BillingEfficiencyReport from '@/components/reports/productivity/BillingEfficiencyReport';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 
-// New reports
+// Additional reports
 import ARAgingSummaryReport from '@/components/reports/client/ARAgingSummaryReport';
 import PaymentHistoryReport from '@/components/reports/client/PaymentHistoryReport';
 import CommissionReport from '@/components/reports/compensation/CommissionReport';
@@ -26,7 +25,7 @@ import VendorPaymentReport from '@/components/reports/vendor/VendorPaymentReport
 import StaffUtilizationReport from '@/components/reports/productivity/StaffUtilizationReport';
 import RevenueTrendsReport from '@/components/reports/productivity/RevenueTrendsReport';
 
-// New client reports
+// Client reports
 import SalesTaxClientsReport from '@/components/reports/client/SalesTaxClientsReport';
 import MatterRateCardsReport from '@/components/reports/client/MatterRateCardsReport';
 import TotalBillingsReport from '@/components/reports/client/TotalBillingsReport';
@@ -41,13 +40,16 @@ const Reports = () => {
     if (path.includes('/reports/client/')) {
       switch(reportType) {
         case 'statement':
+        case 'statement-of-account':
           return <ClientStatementReport />;
         case 'aging':
           return <ClientAgingReport />;
         case 'ar-aging-summary':
           return <ARAgingSummaryReport />;
         case 'payment-history':
+        case 'client-payments':
           return <PaymentHistoryReport />;
+        case 'sales-tax':
         case 'sales-tax-clients':
           return <SalesTaxClientsReport />;
         case 'matter-rate-cards':
