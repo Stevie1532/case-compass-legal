@@ -37,6 +37,27 @@ import VendorSpendReport from '@/components/reports/vendor/VendorSpendReport';
 import GeneralLedgerReport from '@/components/reports/accounting/GeneralLedgerReport';
 import AttorneyProductivityReport from '@/components/reports/productivity/AttorneyProductivityReport';
 
+// New accounting reports
+import ProfitLossByLocationReport from '@/components/reports/accounting/ProfitLossByLocationReport';
+import TrialBalanceReport from '@/components/reports/accounting/TrialBalanceReport';
+import ChartOfAccountsReport from '@/components/reports/accounting/ChartOfAccountsReport';
+import AccountReconciliationReport from '@/components/reports/accounting/AccountReconciliationReport';
+import WriteOffReport from '@/components/reports/accounting/WriteOffReport';
+import FirmBudgetingReport from '@/components/reports/accounting/FirmBudgetingReport';
+
+// New vendor reports
+import AccountPayableAgingReport from '@/components/reports/vendor/AccountPayableAgingReport';
+import VendorReimbursementsReport from '@/components/reports/vendor/VendorReimbursementsReport';
+import Vendor1099Report from '@/components/reports/vendor/Vendor1099Report';
+
+// New productivity reports
+import WorkInProgressReport from '@/components/reports/productivity/WorkInProgressReport';
+import TimekeeperProductivityReport from '@/components/reports/productivity/TimekeeperProductivityReport';
+import BillableHoursReport from '@/components/reports/productivity/BillableHoursReport';
+import TimekeeperGoalsReport from '@/components/reports/productivity/TimekeeperGoalsReport';
+import BilledAndCollectedReport from '@/components/reports/productivity/BilledAndCollectedReport';
+import FlatFeeProductivityReport from '@/components/reports/productivity/FlatFeeProductivityReport';
+
 const Reports = () => {
   const location = useLocation();
   const path = location.pathname;
@@ -89,11 +110,29 @@ const Reports = () => {
     if (path === '/reports/accounting/profit-loss') {
       return <ProfitLossReport />;
     }
+    if (path === '/reports/accounting/profit-loss-by-location') {
+      return <ProfitLossByLocationReport />;
+    }
     if (path === '/reports/accounting/cash-flow') {
       return <CashFlowReport />;
     }
     if (path === '/reports/accounting/balance-sheet') {
       return <BalanceSheetReport />;
+    }
+    if (path === '/reports/accounting/trial-balance') {
+      return <TrialBalanceReport />;
+    }
+    if (path === '/reports/accounting/chart-of-accounts') {
+      return <ChartOfAccountsReport />;
+    }
+    if (path === '/reports/accounting/account-reconciliation') {
+      return <AccountReconciliationReport />;
+    }
+    if (path === '/reports/accounting/write-off') {
+      return <WriteOffReport />;
+    }
+    if (path === '/reports/accounting/firm-budgeting') {
+      return <FirmBudgetingReport />;
     }
     if (path === '/reports/accounting/expense-analysis') {
       return <ExpenseAnalysisReport />;
@@ -118,6 +157,15 @@ const Reports = () => {
     if (path === '/reports/vendor/spend-analysis') {
       return <VendorSpendReport />;
     }
+    if (path === '/reports/vendor/account-payable-aging-summary') {
+      return <AccountPayableAgingReport />;
+    }
+    if (path === '/reports/vendor/vendor-reimbursements') {
+      return <VendorReimbursementsReport />;
+    }
+    if (path === '/reports/vendor/1099-reporting') {
+      return <Vendor1099Report />;
+    }
 
     // Productivity reports
     if (path === '/reports/productivity/case-productivity') {
@@ -134,6 +182,24 @@ const Reports = () => {
     }
     if (path === '/reports/productivity/attorney-productivity') {
       return <AttorneyProductivityReport />;
+    }
+    if (path === '/reports/productivity/work-in-progress') {
+      return <WorkInProgressReport />;
+    }
+    if (path === '/reports/productivity/timekeeper-productivity') {
+      return <TimekeeperProductivityReport />;
+    }
+    if (path === '/reports/productivity/billable-hours') {
+      return <BillableHoursReport />;
+    }
+    if (path === '/reports/productivity/timekeeper-goals') {
+      return <TimekeeperGoalsReport />;
+    }
+    if (path === '/reports/productivity/billed-and-collected') {
+      return <BilledAndCollectedReport />;
+    }
+    if (path === '/reports/productivity/flat-fee-productivity') {
+      return <FlatFeeProductivityReport />;
     }
     
     // Default fallback
