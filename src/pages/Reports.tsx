@@ -26,6 +26,11 @@ import VendorPaymentReport from '@/components/reports/vendor/VendorPaymentReport
 import StaffUtilizationReport from '@/components/reports/productivity/StaffUtilizationReport';
 import RevenueTrendsReport from '@/components/reports/productivity/RevenueTrendsReport';
 
+// New client reports
+import SalesTaxClientsReport from '@/components/reports/client/SalesTaxClientsReport';
+import MatterRateCardsReport from '@/components/reports/client/MatterRateCardsReport';
+import TotalBillingsReport from '@/components/reports/client/TotalBillingsReport';
+
 const Reports = () => {
   const { reportType } = useParams<{ reportType: string }>();
   const location = useLocation();
@@ -43,6 +48,12 @@ const Reports = () => {
           return <ARAgingSummaryReport />;
         case 'payment-history':
           return <PaymentHistoryReport />;
+        case 'sales-tax-clients':
+          return <SalesTaxClientsReport />;
+        case 'matter-rate-cards':
+          return <MatterRateCardsReport />;
+        case 'total-billings':
+          return <TotalBillingsReport />;
         default:
           return <ClientStatementReport />;
       }

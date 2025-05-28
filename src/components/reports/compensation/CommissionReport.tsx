@@ -1,197 +1,200 @@
-
 import React, { useState } from 'react';
 import ReportLayout from '../ReportLayout';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Progress } from '@/components/ui/progress';
 
 const CommissionReport = () => {
-  const [timeframe, setTimeframe] = useState('current-month');
-  const [userFilter, setUserFilter] = useState('all');
+  const [employee, setEmployee] = useState('all');
+  const [period, setPeriod] = useState('current-quarter');
   
   // Sample data
   const commissionData = [
     {
-      employeeId: "EMP-001",
-      name: "John Smith",
-      department: "Corporate",
-      salesAmount: 125000.00,
-      commissionRate: 0.05,
-      commission: 6250.00,
-      tier: "Senior",
+      id: "COMM-001",
+      employee: "John Smith",
+      title: "Senior Partner",
+      baseSalary: 120000,
+      commissionRate: 0.15,
+      revenue: 245000,
+      commission: 36750,
+      totalCompensation: 156750,
+      target: 200000,
+      achievement: 122.5
     },
     {
-      employeeId: "EMP-002",
-      name: "Sarah Johnson",
-      department: "Family Law",
-      salesAmount: 87500.00,
-      commissionRate: 0.04,
-      commission: 3500.00,
-      tier: "Mid-level",
+      id: "COMM-002",
+      employee: "Sarah Johnson",
+      title: "Associate",
+      baseSalary: 85000,
+      commissionRate: 0.12,
+      revenue: 180000,
+      commission: 21600,
+      totalCompensation: 106600,
+      target: 150000,
+      achievement: 120.0
     },
     {
-      employeeId: "EMP-003",
-      name: "Michael Chen",
-      department: "Criminal",
-      salesAmount: 210000.00,
-      commissionRate: 0.06,
-      commission: 12600.00,
-      tier: "Executive",
+      id: "COMM-003",
+      employee: "Michael Chen",
+      title: "Partner",
+      baseSalary: 110000,
+      commissionRate: 0.18,
+      revenue: 320000,
+      commission: 57600,
+      totalCompensation: 167600,
+      target: 300000,
+      achievement: 106.7
     },
     {
-      employeeId: "EMP-004",
-      name: "Jessica Taylor",
-      department: "Corporate",
-      salesAmount: 95000.00,
-      commissionRate: 0.04,
-      commission: 3800.00,
-      tier: "Mid-level",
-    },
-    {
-      employeeId: "EMP-005",
-      name: "David Wilson",
-      department: "Real Estate",
-      salesAmount: 150000.00,
-      commissionRate: 0.05,
-      commission: 7500.00,
-      tier: "Senior",
-    },
-    {
-      employeeId: "EMP-006",
-      name: "Emily Rodriguez",
-      department: "Tax",
-      salesAmount: 175000.00,
-      commissionRate: 0.055,
-      commission: 9625.00,
-      tier: "Senior",
-    },
+      id: "COMM-004",
+      employee: "Jessica Taylor",
+      title: "Senior Associate",
+      baseSalary: 95000,
+      commissionRate: 0.10,
+      revenue: 165000,
+      commission: 16500,
+      totalCompensation: 111500,
+      target: 175000,
+      achievement: 94.3
+    }
   ];
+
+  const employees = [...new Set(commissionData.map(comm => comm.employee))];
   
-  const filteredData = commissionData.filter(employee => {
-    return userFilter === 'all' || employee.tier === userFilter;
-  });
-  
-  const chartColors = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#0088FE', '#FFBB28'];
-  
-  const chartData = filteredData.map(employee => ({
-    name: employee.name,
-    commission: employee.commission,
-  }));
-  
-  const totals = filteredData.reduce(
-    (acc, curr) => ({
-      salesAmount: acc.salesAmount + curr.salesAmount,
-      commission: acc.commission + curr.commission,
-    }),
-    { salesAmount: 0, commission: 0 }
-  );
+  const filteredCommissions = employee === 'all' 
+    ? commissionData 
+    : commissionData.filter(comm => comm.employee === employee);
+
+  // Quarterly trends
+  const quarterlyData = [
+    { quarter: 'Q1 2023', commission: 95000, revenue: 850000 },
+    { quarter: 'Q2 2023', commission: 108000, revenue: 920000 },
+    { quarter: 'Q3 2023', commission: 118000, revenue: 980000 },
+    { quarter: 'Q4 2023', commission: 132450, revenue: 910000 }
+  ];
+
+  const totalCommission = filteredCommissions.reduce((sum, comm) => sum + comm.commission, 0);
+  const totalRevenue = filteredCommissions.reduce((sum, comm) => sum + comm.revenue, 0);
+  const avgAchievement = filteredCommissions.reduce((sum, comm) => sum + comm.achievement, 0) / filteredCommissions.length;
 
   return (
     <ReportLayout
-      title="Sales Commission Report"
-      description="Analysis of commission earnings by employee"
+      title="Commission Report"
+      description="Analysis of employee commissions and performance against targets"
       filterable
       dateFilterable
     >
       <div className="space-y-6">
-        <div className="flex justify-between items-center mb-4">
-          <div>
-            <h3 className="text-lg font-medium mb-1">Commission Summary</h3>
-            <p className="text-sm text-muted-foreground">
-              Showing data for {timeframe === 'current-month' ? 'Current Month' : 
-                            timeframe === 'last-quarter' ? 'Last Quarter' : 'Year to Date'}
-            </p>
+        {/* Summary Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="bg-green-50 p-4 rounded-lg">
+            <p className="text-sm text-muted-foreground">Total Commission</p>
+            <p className="text-2xl font-bold">${totalCommission.toFixed(2)}</p>
           </div>
-          <div className="flex gap-2">
-            <Select value={timeframe} onValueChange={setTimeframe}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select timeframe" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="current-month">Current Month</SelectItem>
-                <SelectItem value="last-quarter">Last Quarter</SelectItem>
-                <SelectItem value="ytd">Year to Date</SelectItem>
-              </SelectContent>
-            </Select>
-            
-            <Select value={userFilter} onValueChange={setUserFilter}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter by tier" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Tiers</SelectItem>
-                <SelectItem value="Executive">Executive</SelectItem>
-                <SelectItem value="Senior">Senior</SelectItem>
-                <SelectItem value="Mid-level">Mid-level</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-blue-50 p-4 rounded-lg">
-            <p className="text-sm text-muted-foreground">Total Sales Amount</p>
-            <p className="text-2xl font-bold">${totals.salesAmount.toFixed(2)}</p>
+            <p className="text-sm text-muted-foreground">Revenue Generated</p>
+            <p className="text-2xl font-bold">${totalRevenue.toFixed(2)}</p>
           </div>
           <div className="bg-purple-50 p-4 rounded-lg">
-            <p className="text-sm text-muted-foreground">Total Commission Paid</p>
-            <p className="text-2xl font-bold">${totals.commission.toFixed(2)}</p>
+            <p className="text-sm text-muted-foreground">Avg Achievement</p>
+            <p className="text-2xl font-bold">{avgAchievement.toFixed(1)}%</p>
           </div>
-          <div className="bg-green-50 p-4 rounded-lg">
-            <p className="text-sm text-muted-foreground">Average Commission Rate</p>
-            <p className="text-2xl font-bold">
-              {(totals.commission / totals.salesAmount * 100).toFixed(2)}%
-            </p>
+          <div className="bg-amber-50 p-4 rounded-lg">
+            <p className="text-sm text-muted-foreground">Commission Rate</p>
+            <p className="text-2xl font-bold">{((totalCommission / totalRevenue) * 100).toFixed(1)}%</p>
           </div>
         </div>
-        
-        <div className="h-80">
-          <h3 className="text-lg font-medium mb-3">Commission by Employee</h3>
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
-              <Bar dataKey="commission" name="Commission Amount">
-                {chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+
+        {/* Charts Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="text-lg font-medium mb-3">Commission by Employee</h3>
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={filteredCommissions} layout="vertical">
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" />
+                  <YAxis type="category" dataKey="employee" width={100} />
+                  <RechartsTooltip 
+                    formatter={(value: any) => [`$${Number(value).toFixed(2)}`, 'Commission']}
+                  />
+                  <Bar dataKey="commission" fill="#8884d8" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-medium mb-3">Quarterly Commission Trends</h3>
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={quarterlyData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="quarter" />
+                  <YAxis />
+                  <RechartsTooltip formatter={(value: any) => [`$${Number(value).toFixed(2)}`, 'Amount']} />
+                  <Line type="monotone" dataKey="commission" stroke="#8884d8" name="Commission" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
         </div>
-        
+
+        {/* Commission Details Table */}
         <div>
-          <h3 className="text-lg font-medium mb-3">Commission Details</h3>
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-lg font-medium">Commission Details</h3>
+            <Select value={employee} onValueChange={setEmployee}>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Filter by employee" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Employees</SelectItem>
+                {employees.map(emp => (
+                  <SelectItem key={emp} value={emp}>{emp}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Employee</TableHead>
-                <TableHead>Department</TableHead>
-                <TableHead>Tier</TableHead>
-                <TableHead className="text-right">Sales Amount</TableHead>
-                <TableHead className="text-right">Rate</TableHead>
+                <TableHead>Title</TableHead>
+                <TableHead className="text-right">Base Salary</TableHead>
+                <TableHead className="text-right">Revenue</TableHead>
+                <TableHead className="text-right">Commission Rate</TableHead>
                 <TableHead className="text-right">Commission</TableHead>
+                <TableHead className="text-right">Total Comp</TableHead>
+                <TableHead className="text-right">Target Achievement</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredData.map(employee => (
-                <TableRow key={employee.employeeId}>
-                  <TableCell className="font-medium">{employee.name}</TableCell>
-                  <TableCell>{employee.department}</TableCell>
-                  <TableCell>{employee.tier}</TableCell>
-                  <TableCell className="text-right">${employee.salesAmount.toFixed(2)}</TableCell>
-                  <TableCell className="text-right">{(employee.commissionRate * 100).toFixed(2)}%</TableCell>
-                  <TableCell className="text-right font-medium">${employee.commission.toFixed(2)}</TableCell>
+              {filteredCommissions.map(comm => (
+                <TableRow key={comm.id}>
+                  <TableCell className="font-medium">{comm.employee}</TableCell>
+                  <TableCell>{comm.title}</TableCell>
+                  <TableCell className="text-right">${comm.baseSalary.toLocaleString()}</TableCell>
+                  <TableCell className="text-right">${comm.revenue.toLocaleString()}</TableCell>
+                  <TableCell className="text-right">{(comm.commissionRate * 100).toFixed(1)}%</TableCell>
+                  <TableCell className="text-right">${comm.commission.toLocaleString()}</TableCell>
+                  <TableCell className="text-right">${comm.totalCompensation.toLocaleString()}</TableCell>
+                  <TableCell className="text-right">
+                    <div className="flex items-center gap-2">
+                      <span className={comm.achievement >= 100 ? 'text-green-600' : 'text-red-600'}>
+                        {comm.achievement.toFixed(1)}%
+                      </span>
+                      <Progress 
+                        value={Math.min(comm.achievement, 150)} 
+                        className="w-16 h-2" 
+                      />
+                    </div>
+                  </TableCell>
                 </TableRow>
               ))}
-              <TableRow className="bg-gray-50 font-medium">
-                <TableCell colSpan={3}>Totals</TableCell>
-                <TableCell className="text-right">${totals.salesAmount.toFixed(2)}</TableCell>
-                <TableCell className="text-right">—</TableCell>
-                <TableCell className="text-right">${totals.commission.toFixed(2)}</TableCell>
-              </TableRow>
             </TableBody>
           </Table>
         </div>
